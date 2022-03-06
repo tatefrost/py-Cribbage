@@ -4,12 +4,12 @@ import random
 
 class Card:
     """Class for single card"""
-    def __init__(self, suit, val):
+    def __init__(self, suit, value):
         self.suit = suit
-        self.val = val
+        self.value = value
 
     def show(self):
-        print("{} of {}".format(self.val, self.suit))
+        print("{} of {}".format(self.value, self.suit))
 
 class Deck:
     """Class for a deck"""
@@ -23,8 +23,8 @@ class Deck:
                 self.cards.append(Card(suit, value))
 
     def show(self):
-        for c in self.cards:
-            c.show()
+        for card in self.cards:
+            card.show()
 
             # Usage example ↓
 
@@ -65,24 +65,24 @@ class Player:
         self.name = name
         
         self.hand = []
+    
+    def draw(self, deck):
+        self.hand.append(deck.drawcard())
 
-        def draw(self, deck):
-            self.hand.append(deck.drawcard())
+        return self
 
-            return self
+    def showHand(self):
+        for card in self.hand:
+            card.show()
 
-        def showHand(self):
-            for card in self.hand:
-                card.show()
+            # Usage example ↓
 
-                # Usage example ↓
+            # deck = Deck()
 
-                # deck = Deck()
+            # deck.shuffle()
 
-                # deck.shuffle()
+            # bob = Player("Bob")
 
-                # bob = Player("Bob")
+            # bob.draw(deck)
 
-                # bob.draw(deck)
-
-                # bob.showHand()
+            # bob.showHand()
