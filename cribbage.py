@@ -3,6 +3,7 @@
 import random
 
 class Card:
+    """Class for single card"""
     def __init__(self, suit, val):
         self.suit = suit
         self.val = val
@@ -11,6 +12,7 @@ class Card:
         print("{} of {}".format(self.val, self.suit))
 
 class Deck:
+    """Class for a deck"""
     def __init__(self):
         self.cards = []
         self.build()
@@ -24,6 +26,8 @@ class Deck:
         for c in self.cards:
             c.show()
 
+            # Usage example ↓
+
             # deck = Deck()
 
             # deck.show()
@@ -34,6 +38,8 @@ class Deck:
 
             self.cards[i], self.cards[r] = self.cards[r], self.cards[i]
 
+            # Usage example ↓
+
             # deck = Deck()
 
             # deck.shuffle()
@@ -42,6 +48,8 @@ class Deck:
 
     def drawCard(self):
         return self.cards.pop()
+
+        # Usage example ↓
 
         # deck = Deck()
 
@@ -52,6 +60,7 @@ class Deck:
         # card.show()
 
 class Player:
+    """Class for a player"""
     def __init__(self, name):
         self.name = name
         
@@ -65,6 +74,8 @@ class Player:
         def showHand(self):
             for card in self.hand:
                 card.show()
+
+                # Usage example ↓
 
                 # deck = Deck()
 
