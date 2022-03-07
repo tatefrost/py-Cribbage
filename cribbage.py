@@ -90,7 +90,20 @@ class Player:
 
 def dealCards():
         """Function to deal a hand of cards to the players"""
-        pass
+        player1 = Player(input("Enter a player name: "))
+        player2 = Player("Player2")
+
+        deck = Deck()
+
+        deck.shuffle()
+
+        for num in range(0,5):
+                player1.draw(deck)
+                player2.draw(deck)
+
+        print("Here is your hand")
+
+        player1.showHand()
 
 
 def startTurn():
