@@ -67,7 +67,7 @@ class Player:
         self.hand = []
     
     def draw(self, deck):
-        self.hand.append(deck.drawcard())
+        self.hand.append(deck.drawCard())
 
         return self
 
@@ -86,3 +86,32 @@ class Player:
             # bob.draw(deck)
 
             # bob.showHand()
+
+
+def dealCards():
+        """Function to deal a hand of cards to the players"""
+        pass
+
+
+def startTurn():
+        """Function which runs each round of play in cribbage"""
+        dealCards()
+
+
+def pickCard():
+        """A function that prompts the user to select a card from their hand"""
+        pass
+
+
+def startGame():
+        """Function which begins the game"""
+        startTurn()
+
+
+def scoreHand():
+        """Function which scores a players hand"""
+        pass
+
+
+if __name__ == "__main__":
+        startGame()
