@@ -88,22 +88,44 @@ class Player:
             # bob.showHand()
 
 
-def dealCards():
+def dealCards(player1, player2):
         """Function to deal a hand of cards to the players"""
-        player1 = Player(input("Enter a player name: "))
-        player2 = Player("Player2")
 
         deck = Deck()
 
         deck.shuffle()
 
-        for num in range(0,5):
+        for num in range(0, 6):
                 player1.draw(deck)
                 player2.draw(deck)
 
         print("Here is your hand")
 
         player1.showHand()
+
+
+def goesFirst(player1, player2):
+        """Function to find which player goes first"""
+
+        deck = Deck()
+
+        deck.shuffle()
+
+        player1.draw(deck)
+        player2.draw(deck)
+
+        p1card = player1.showHand()
+        p2card = player2.showHand()
+
+        if int(p1card[0]) > int(p2card[0]):
+                print(f"{player1} goes first")
+                return player1
+        elif int(p1card[0]) < int(p2card[0]):
+                print(f"{player2} goes first")
+                return player2
+        elif int(p1card[0]) == int(p2card[0]):
+                print("It's a tie, re-draw")
+                goesFirst()
 
 
 def startTurn():
@@ -118,6 +140,10 @@ def pickCard():
 
 def startGame():
         """Function which begins the game"""
+        player1 = Player(input("Enter a player name: "))
+        player2 = Player("Player2")
+
+        goesFirst(player1, player2)
         startTurn()
 
 
