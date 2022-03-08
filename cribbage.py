@@ -128,9 +128,13 @@ def goesFirst(player1, player2):
                 goesFirst()
 
 
-def startTurn():
+def startTurn(player):
         """Function which runs each round of play in cribbage"""
         dealCards()
+
+        print(f"Pick a card to put in {player} crib")
+
+        cards = pickCard()
 
 
 def pickCard():
