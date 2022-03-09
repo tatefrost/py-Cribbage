@@ -10,6 +10,7 @@ class Card:
 
     def show(self):
         print("{} of {}".format(self.value, self.suit))
+        return self.value
 
 class Deck:
     """Class for a deck"""
@@ -111,34 +112,32 @@ def goesFirst(player1, player2):
 
         deck.shuffle()
 
-        player1.draw(deck)
-        player2.draw(deck)
+        p1card = deck.drawCard()
+        p2card = deck.drawCard()
 
-        p1card = player1.showHand()
-        p2card = player2.showHand()
 
-        if int(p1card[0]) > int(p2card[0]):
+        if (p1card.show()) > (p2card.show()):
                 print(f"{player1} goes first")
-                return player1
-        elif int(p1card[0]) < int(p2card[0]):
+                return player1, player2
+        elif (p1card.show()) < (p2card.show()):
                 print(f"{player2} goes first")
-                return player2
-        elif int(p1card[0]) == int(p2card[0]):
+                return player2, player1
+        elif (p1card.show()) == (p2card.show()):
                 print("It's a tie, re-draw")
-                goesFirst()
+                goesFirst(player1, player2)
 
 
-def startTurn(player):
+def startTurn(players):
         """Function which runs each round of play in cribbage"""
-        dealCards()
+        dealCards(players[0], players[1])
 
-        print(f"Pick a card to put in {player} crib")
+        print(f"Pick a card to put in {players[0]} crib")
 
-        cards = pickCard()
+        card = pick2Cards()
 
 
-def pickCard():
-        """A function that prompts the user to select a card from their hand"""
+def pick2Cards():
+        """A function that prompts the user to select two cards from their hand"""
         pass
 
 
@@ -147,8 +146,7 @@ def startGame():
         player1 = Player(input("Enter a player name: "))
         player2 = Player("Player2")
 
-        goesFirst(player1, player2)
-        startTurn()
+        startTurn(goesFirst(player1, player2))
 
 
 def scoreHand():
