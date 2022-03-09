@@ -61,32 +61,38 @@ class Deck:
         # card.show()
 
 class Player:
-    """Class for a player"""
-    def __init__(self, name):
-        self.name = name
+        """Class for a player"""
+        def __init__(self, name):
+                self.name = name
         
-        self.hand = []
+                self.hand = []
     
-    def draw(self, deck):
-        self.hand.append(deck.drawCard())
+        def draw(self, deck):
+                self.hand.append(deck.drawCard())
 
-        return self
+                return self
+        
+        def addCard(self, card):
+                self.hand.append(card)
 
-    def showHand(self):
-        for card in self.hand:
-            card.show()
+        def removeCard(self, card):
+                self.hand.remove(card)
 
-            # Usage example ↓
+        def showHand(self):
+                for card in self.hand:
+                        card.show()
 
-            # deck = Deck()
+                # Usage example ↓
 
-            # deck.shuffle()
+                # deck = Deck()
 
-            # bob = Player("Bob")
+                # deck.shuffle()
 
-            # bob.draw(deck)
+                # bob = Player("Bob")
 
-            # bob.showHand()
+                # bob.draw(deck)
+
+                # bob.showHand()
 
 
 def dealCards(player1, player2):
@@ -117,10 +123,10 @@ def goesFirst(player1, player2):
 
 
         if (p1card.show()) > (p2card.show()):
-                print(f"{player1} goes first")
+                print(f"{player1.name} goes first")
                 return player1, player2
         elif (p1card.show()) < (p2card.show()):
-                print(f"{player2} goes first")
+                print(f"{player2.name} goes first")
                 return player2, player1
         elif (p1card.show()) == (p2card.show()):
                 print("It's a tie, re-draw")
@@ -129,16 +135,27 @@ def goesFirst(player1, player2):
 
 def startTurn(players):
         """Function which runs each round of play in cribbage"""
+
         dealCards(players[0], players[1])
 
-        print(f"Pick a card to put in {players[0]} crib")
+        print(f"Pick a card to put in {players[0].name}'s crib")
 
-        card = pick2Cards()
+        card = pick2Cards(players[0], players[1])
 
 
-def pick2Cards():
+def pick2Cards(cribPlayer, otherPlayer):
         """A function that prompts the user to select two cards from their hand"""
-        pass
+        
+        card1 = input(int("Pick a card from your hand: "))
+        card2 = input(int("Pick another card from your hand: "))
+
+        crib = Player("Crib")
+
+        for card in cribPlayer.showHand():
+                if card == card1 or card == card2:
+                        print(f"You selected {card}")
+                        crib.addCard(card)
+                        cribPlayer.removeCard(card)
 
 
 def startGame():
