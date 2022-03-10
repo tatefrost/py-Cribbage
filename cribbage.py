@@ -81,7 +81,7 @@ class Player:
                 self.hand.append(card)
 
         def removeCard(self, card):
-                self.hand.remove(card)
+                del self.hand[card]
 
         def showHand(self):
                 for card in self.hand:
@@ -160,14 +160,17 @@ def pick2Cards(cribPlayer, otherPlayer):
 
         crib = Player("Crib")
 
+        i = 0
+
         for card in cribPlayer.getHand():
-                print(card)
                 if str(card) == card1 or str(card) == card2:
                         print(f"You selected {card}")
                         crib.addCard(card)
-                        cribPlayer.removeCard(card)
+                        cribPlayer.removeCard(i)
+                        i += 1
 
         cribPlayer.showHand()
+
 
 
 def startGame():
