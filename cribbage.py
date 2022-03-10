@@ -3,62 +3,67 @@
 import random
 
 class Card:
-    """Class for single card"""
-    def __init__(self, suit, value):
-        self.suit = suit
-        self.value = value
+        """Class for single card"""
+        def __init__(self, suit, value):
+                self.suit = suit
+                self.value = value
 
-    def show(self):
-        print("{} of {}".format(self.value, self.suit))
-        return self.value
+        def show(self):
+                print("{} of {}".format(self.value, self.suit))
+
+        def getValue(self):
+                return self.value
+
+        def getCard(self):
+                return f"{self.value} of {self.suit}"
 
 class Deck:
-    """Class for a deck"""
-    def __init__(self):
-        self.cards = []
-        self.build()
+        """Class for a deck"""
+        def __init__(self):
+                self.cards = []
+                self.build()
 
-    def build(self):
-        for suit in ["Spades", "Clubs", "Diamonds", "Hearts"]:
-            for value in range(1, 14):
-                self.cards.append(Card(suit, value))
+        def build(self):
+                for suit in ["Spades", "Clubs", "Diamonds", "Hearts"]:
+                        for value in range(1, 14):
+                                self.cards.append(Card(suit, value))
 
-    def show(self):
-        for card in self.cards:
-            card.show()
+        def show(self):
+                for card in self.cards:
+                        card.show()
 
-            # Usage example ↓
+                # Usage example ↓
 
-            # deck = Deck()
+                # deck = Deck()
 
-            # deck.show()
+                # deck.show()
 
-    def shuffle(self):
-        for i in range(len(self.cards)-1, 0, -1):
-            r = random.randint(0, i)
+        def shuffle(self):
+                for i in range(len(self.cards)-1, 0, -1):
+                        r = random.randint(0, i)
 
-            self.cards[i], self.cards[r] = self.cards[r], self.cards[i]
+                        self.cards[i], self.cards[r] = self.cards[r], self.cards[i]
 
-            # Usage example ↓
+                # Usage example ↓
 
-            # deck = Deck()
+                # deck = Deck()
 
-            # deck.shuffle()
+                # deck.shuffle()
 
-            # deck.show()
+                # deck.show()
 
-    def drawCard(self):
-        return self.cards.pop()
+        def drawCard(self):
+                return self.cards.pop()
 
-        # Usage example ↓
+                # Usage example ↓
 
-        # deck = Deck()
+                # deck = Deck()
 
-        # deck.shuffle()
+                # deck.shuffle()
 
-        # card = deck.drawCard()
+                # card = deck.drawCard()
 
-        # card.show()
+                # card.show()
 
 class Player:
         """Class for a player"""
@@ -93,6 +98,12 @@ class Player:
                 # bob.draw(deck)
 
                 # bob.showHand()
+        
+        def getHand(self):
+                hand_cards = []
+                for card in self.hand:
+                        hand_cards.append(card.getCard())
+                return hand_cards
 
 
 def dealCards(player1, player2):
@@ -122,13 +133,13 @@ def goesFirst(player1, player2):
         p2card = deck.drawCard()
 
 
-        if (p1card.show()) > (p2card.show()):
+        if (p1card.getValue()) > (p2card.getValue()):
                 print(f"{player1.name} goes first")
                 return player1, player2
-        elif (p1card.show()) < (p2card.show()):
+        elif (p1card.getValue()) < (p2card.getValue()):
                 print(f"{player2.name} goes first")
                 return player2, player1
-        elif (p1card.show()) == (p2card.show()):
+        elif (p1card.getValue()) == (p2card.getValue()):
                 print("It's a tie, re-draw")
                 goesFirst(player1, player2)
 
@@ -138,24 +149,25 @@ def startTurn(players):
 
         dealCards(players[0], players[1])
 
-        print(f"Pick a card to put in {players[0].name}'s crib")
-
         card = pick2Cards(players[0], players[1])
 
 
 def pick2Cards(cribPlayer, otherPlayer):
         """A function that prompts the user to select two cards from their hand"""
         
-        card1 = input(int("Pick a card from your hand: "))
-        card2 = input(int("Pick another card from your hand: "))
+        card1 = input("Pick a card from your hand: ")
+        card2 = input("Pick another card from your hand: ")
 
         crib = Player("Crib")
 
-        for card in cribPlayer.showHand():
-                if card == card1 or card == card2:
+        for card in cribPlayer.getHand():
+                print(card)
+                if str(card) == card1 or str(card) == card2:
                         print(f"You selected {card}")
                         crib.addCard(card)
                         cribPlayer.removeCard(card)
+
+        cribPlayer.showHand()
 
 
 def startGame():
