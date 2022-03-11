@@ -76,9 +76,6 @@ class Player:
                 self.hand.append(deck.drawCard())
 
                 return self
-        
-        def addCard(self, card):
-                self.hand.append(card)
 
         def removeCard(self, card):
                 self.hand.pop(card)
@@ -158,18 +155,27 @@ def pick2Cards(cribPlayer, otherPlayer):
         card1 = input("Pick a card from your hand: ")
         card2 = input("Pick another card from your hand: ")
 
-        crib = Player("Crib")
+        crib = []
 
         i = 0
 
         for card in cribPlayer.getHand():
                 if str(card) == card1 or str(card) == card2:
                         print(f"You selected {card}")
-                        # crib.addCard(card) add card not functional
+                        crib.append(str(card))
                         cribPlayer.removeCard(i)
                         i -= 1
                 i += 1
 
+        for card in otherPlayer.getHand():
+                if str(card) == card1 or str(card) == card2:
+                        print(f"You selected {card}")
+                        crib.append(str(card))
+                        cribPlayer.removeCard(i)
+                        i -= 1
+                i += 1
+
+        print("Here is your hand:")
         cribPlayer.showHand()
 
 
