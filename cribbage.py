@@ -65,11 +65,13 @@ class Deck:
 
                 # card.show()
 
+
+
 class Player:
         """Class for a player"""
         def __init__(self, name):
                 self.name = name
-        
+                self.points = 0
                 self.hand = []
     
         def draw(self, deck):
@@ -101,6 +103,11 @@ class Player:
                 for card in self.hand:
                         hand_cards.append(card.getCard())
                 return hand_cards
+
+        def points(self, amount):
+                self.points += amount
+
+                return self.points
 
 
 def dealCards(player1, player2):
@@ -146,7 +153,15 @@ def startTurn(players):
 
         dealCards(players[0], players[1])
 
-        card = pick2Cards(players[0], players[1])
+        crib = pick2Cards(players[0], players[1])
+
+        deck = Deck()
+
+        deck.shuffle()
+
+        top_card = deck.drawCard()
+
+        return crib, top_card, players
 
 
 def pick2Cards(cribPlayer, otherPlayer):
@@ -167,16 +182,23 @@ def pick2Cards(cribPlayer, otherPlayer):
                         i -= 1
                 i += 1
 
+        j = 0
+
         for card in otherPlayer.getHand():
-                if str(card) == card1 or str(card) == card2:
-                        print(f"You selected {card}")
+                if j < 2:
+                        print("Computer has selected a card")
+                        otherPlayer.removeCard(j)
                         crib.append(str(card))
-                        cribPlayer.removeCard(i)
-                        i -= 1
-                i += 1
+                j += 1
 
         print("Here is your hand:")
         cribPlayer.showHand()
+
+        otherPlayer.showHand()
+
+        print(crib)
+
+        return crib
 
 
 
@@ -186,6 +208,12 @@ def startGame():
         player2 = Player("Player2")
 
         startTurn(goesFirst(player1, player2))
+
+
+def playHand(crib, top_card, players):
+        """Function that handles gameplay"""
+
+
 
 
 def scoreHand():
