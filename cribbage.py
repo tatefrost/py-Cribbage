@@ -111,6 +111,9 @@ class Player:
 
                 return self.points
 
+        def playCard(self, card):
+                cards_played = []
+
 
 def dealCards(player1, player2):
         """Function to deal a hand of cards to the players"""
@@ -217,26 +220,26 @@ def playHand(crib, top_card, players):
 
         play_card = top_card.getValue()
 
-        print(f"The play card is a {play_card}")
-
-        crib_player = players[0]
-        other_player = players[1]
-
         if play_card == 11:
-                crib_player.points(2)
-                print(f"{crib_player} gets two points for top card being a Jack")
+                players[0].points(2)
+                print(f"{players[0].name} gets two points for top card being a Jack")
 
-        print(f"{crib_player.name} goes first")
+        print(f"The play card is a {play_card}, {players[0].name} goes first")
 
-        computer_hand = other_player.getHand()
-
-        if crib_player.name == "Computer":
+        if players[0].name == "Computer":
+                computer = players[0]
+                player = players[1]
+                computer_hand = computer.getHand()
                 computer_card = computer_hand[0]
                 print(f"The computer chose {computer_card}")
+        else:
+                player = players[0]
+                computer = players[1]
+                player.showHand()
+                card = input("Choose a card to play: ")
 
-        crib_player.showHand()
 
-        card = input("Choose a card to play: ")
+
 
 
 
