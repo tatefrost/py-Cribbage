@@ -107,6 +107,8 @@ class Player:
         def points(self, amount):
                 self.points += amount
 
+                print(self.points)
+
                 return self.points
 
 
@@ -161,7 +163,7 @@ def startTurn(players):
 
         top_card = deck.drawCard()
 
-        return crib, top_card, players
+        playHand(crib, top_card, players)
 
 
 def pick2Cards(cribPlayer, otherPlayer):
@@ -205,13 +207,37 @@ def pick2Cards(cribPlayer, otherPlayer):
 def startGame():
         """Function which begins the game"""
         player1 = Player(input("Enter a player name: "))
-        player2 = Player("Player2")
+        player2 = Player("Computer")
 
         startTurn(goesFirst(player1, player2))
 
 
 def playHand(crib, top_card, players):
         """Function that handles gameplay"""
+
+        play_card = top_card.getValue()
+
+        print(f"The play card is a {play_card}")
+
+        crib_player = players[0]
+        other_player = players[1]
+
+        if play_card == 11:
+                crib_player.points(2)
+                print(f"{crib_player} gets two points for top card being a Jack")
+
+        print(f"{crib_player.name} goes first")
+
+        computer_hand = other_player.getHand()
+
+        if crib_player.name == "Computer":
+                computer_card = computer_hand[0]
+                print(f"The computer chose {computer_card}")
+
+        crib_player.showHand()
+
+        card = input("Choose a card to play: ")
+
 
 
 
