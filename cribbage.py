@@ -171,8 +171,8 @@ def startTurn(players):
 def pick2Cards(cribPlayer, otherPlayer):
         """A function that prompts the user to select two cards from their hand"""
         
-        card1 = input("\nPick a card from your hand: ")
-        card2 = input("\nPick another card from your hand: ")
+        card1 = input(f"\nPick a card from your hand for {cribPlayer.name}'s crib: ")
+        card2 = input(f"\nPick another card from your hand for {cribPlayer.name}'s crib: ")
 
         crib = []
 
@@ -199,7 +199,7 @@ def pick2Cards(cribPlayer, otherPlayer):
 
         otherPlayer.showHand()
 
-        print("crib", crib)
+        print("\ncrib", crib)
 
         return crib
 
@@ -222,9 +222,12 @@ def playHand(crib, top_card, players):
                 players[0].points(2)
                 print(f"{players[0].name} gets two points for top card being a Jack")
 
-        print(f"The play card is a(n) {top_card.value, top_card.suit}, {players[0].name} goes first")
+        print(f"\nThe play card is a(n) {top_card.getValue()} of {top_card.suit}, {players[0].name} goes first")
 
         cards_played = []
+
+        player1Hand = []
+        player2Hand = []
 
         def playHands():
                 if players[0].points < 121 or players[1].points < 121:
@@ -235,37 +238,49 @@ def playHand(crib, top_card, players):
                                         computer_hand = computer.getHand()
                                         computer_card = computer_hand[0]
                                         cards_played.append(computer_card)
-                                        print(f"The computer chose {computer_card}")
+                                        player1Hand.append(computer_card)
+                                        print(f"\nThe computer chose {computer_card}")
 
                                         player = players[0]
                                         computer = players[1]
                                         player.showHand()
-                                        card = input("Choose a card to play: ")
+                                        card = input("\nChoose a card to play: ")
                                         cards_played.append(card)
+                                        player2Hand.append(card)
 
                                         playHands()
 
                                 else:
+                                        player = players[0]
+                                        computer = players[1]
                                         player.showHand()
-                                        card = input("Choose a card to play: ")
+                                        card = input("\nChoose a card to play: ")
                                         cards_played.append(card)
+                                        player1Hand.append(card)
 
+                                        computer = players[0]
+                                        player = players[1]
+                                        computer_hand = computer.getHand()
+                                        computer_card = computer_hand[0]
                                         cards_played.append(computer_card)
-                                        print(f"The computer chose {computer_card}")
+                                        player2Hand.append(computer_card)
+                                        print(f"\nThe computer chose {computer_card}")
 
                                         playHands()
                         else:
-                                print("Scoring hands")
-                                scoreHand()
+                                print("\nScoring hands")
+                                scoreHand(player1Hand, player2Hand, crib)
                 else:
                         if players[0].points > 120:
-                                print(f"{players[0].name} has won!")
+                                print(f"\n{players[0].name} has won!")
                         elif players[1].points > 120:
-                                print(f"{players[0].name} has won!")
+                                print(f"\n{players[0].name} has won!")
+                
+        playHands()
 
 
 
-def scoreHand():
+def scoreHand(p1Hand, p2Hand, crib):
         """Function which scores a players hand"""
         pass
 
