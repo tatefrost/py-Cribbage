@@ -83,6 +83,7 @@ class Player:
                 self.hand.pop(card)
 
         def showHand(self):
+                print("\nHere is your hand\n")
                 for card in self.hand:
                         card.show()
 
@@ -125,8 +126,6 @@ def dealCards(player1, player2):
         for num in range(0, 6):
                 player1.draw(deck)
                 player2.draw(deck)
-
-        print("Here is your hand")
 
         player1.showHand()
 
@@ -172,8 +171,8 @@ def startTurn(players):
 def pick2Cards(cribPlayer, otherPlayer):
         """A function that prompts the user to select two cards from their hand"""
         
-        card1 = input("Pick a card from your hand: ")
-        card2 = input("Pick another card from your hand: ")
+        card1 = input("\nPick a card from your hand: ")
+        card2 = input("\nPick another card from your hand: ")
 
         crib = []
 
@@ -191,17 +190,16 @@ def pick2Cards(cribPlayer, otherPlayer):
 
         for card in otherPlayer.getHand():
                 if j < 2:
-                        print("Computer has selected a card")
+                        print("\nComputer has selected a card")
                         otherPlayer.removeCard(j)
                         crib.append(str(card))
                 j += 1
 
-        print("Here is your hand:")
         cribPlayer.showHand()
 
         otherPlayer.showHand()
 
-        print(crib)
+        print("crib", crib)
 
         return crib
 
@@ -224,24 +222,46 @@ def playHand(crib, top_card, players):
                 players[0].points(2)
                 print(f"{players[0].name} gets two points for top card being a Jack")
 
-        print(f"The play card is a {play_card}, {players[0].name} goes first")
+        print(f"The play card is a(n) {top_card.value, top_card.suit}, {players[0].name} goes first")
 
-        if players[0].name == "Computer":
-                computer = players[0]
-                player = players[1]
-                computer_hand = computer.getHand()
-                computer_card = computer_hand[0]
-                print(f"The computer chose {computer_card}")
-        else:
-                player = players[0]
-                computer = players[1]
-                player.showHand()
-                card = input("Choose a card to play: ")
+        cards_played = []
 
+        def playHands():
+                if players[0].points < 121 or players[1].points < 121:
+                        if players[0].hand != [] and players[1].hand != []:
+                                if players[0].name == "Computer":
+                                        computer = players[0]
+                                        player = players[1]
+                                        computer_hand = computer.getHand()
+                                        computer_card = computer_hand[0]
+                                        cards_played.append(computer_card)
+                                        print(f"The computer chose {computer_card}")
 
+                                        player = players[0]
+                                        computer = players[1]
+                                        player.showHand()
+                                        card = input("Choose a card to play: ")
+                                        cards_played.append(card)
 
+                                        playHands()
 
+                                else:
+                                        player.showHand()
+                                        card = input("Choose a card to play: ")
+                                        cards_played.append(card)
 
+                                        cards_played.append(computer_card)
+                                        print(f"The computer chose {computer_card}")
+
+                                        playHands()
+                        else:
+                                print("Scoring hands")
+                                scoreHand()
+                else:
+                        if players[0].points > 120:
+                                print(f"{players[0].name} has won!")
+                        elif players[1].points > 120:
+                                print(f"{players[0].name} has won!")
 
 
 
