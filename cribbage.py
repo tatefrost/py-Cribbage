@@ -222,49 +222,52 @@ def playHand(crib, top_card, players):
                 players[0].points(2)
                 print(f"{players[0].name} gets two points for top card being a Jack")
 
-        print(f"\nThe play card is a(n) {top_card.getValue()} of {top_card.suit}, {players[0].name} goes first")
+        print(f"\nThe play card is a(n) {top_card.getValue()} of {top_card.suit}, {players[1].name} goes first")
 
         cards_played = []
 
-        player1Hand = []
-        player2Hand = []
+        player1HandPlayed = []
+        player2HandPlayed = []
+
+        player1Hand = players[0].getHand()
+        player2Hand = players[1].getHand()
 
         def playHands():
                 if players[0].points < 121 or players[1].points < 121:
-                        if players[0].hand != [] and players[1].hand != []:
+                        if player1Hand != [] and player2Hand != []:
                                 if players[0].name == "Computer":
-                                        computer = players[0]
                                         player = players[1]
+                                        computer = players[0]
+                                        print(player2Hand)
+                                        card = input("\nChoose a card to play: ")
+                                        cards_played.append(card)
+                                        player1HandPlayed.append(card)
+                                        player2Hand.remove(card)
+
                                         computer_hand = computer.getHand()
                                         computer_card = computer_hand[0]
                                         cards_played.append(computer_card)
-                                        player1Hand.append(computer_card)
+                                        player1HandPlayed.append(computer_card)
                                         print(f"\nThe computer chose {computer_card}")
-
-                                        player = players[0]
-                                        computer = players[1]
-                                        player.showHand()
-                                        card = input("\nChoose a card to play: ")
-                                        cards_played.append(card)
-                                        player2Hand.append(card)
 
                                         playHands()
 
                                 else:
-                                        player = players[0]
                                         computer = players[1]
-                                        player.showHand()
-                                        card = input("\nChoose a card to play: ")
-                                        cards_played.append(card)
-                                        player1Hand.append(card)
-
-                                        computer = players[0]
-                                        player = players[1]
+                                        player = players[0]
                                         computer_hand = computer.getHand()
                                         computer_card = computer_hand[0]
                                         cards_played.append(computer_card)
                                         player2Hand.append(computer_card)
                                         print(f"\nThe computer chose {computer_card}")
+
+                                        player = players[0]
+                                        computer = players[1]
+                                        print(player2Hand)
+                                        card = input("\nChoose a card to play: ")
+                                        cards_played.append(card)
+                                        player2Hand.append(card)
+                                        player2Hand.remove(card)
 
                                         playHands()
                         else:
